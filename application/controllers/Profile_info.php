@@ -42,12 +42,12 @@ class Profile_info extends Root_Controller
             $this->db->select('u_type.name type_name');
             $this->db->select('e_class.name employee_class_name');
             $this->db->select('u_group.name group_name');
-            $this->db->from($this->config->item('table_login_setup_user').' user');
-            $this->db->join($this->config->item('table_login_setup_user_info').' user_info','user_info.user_id=user.id');
+            $this->db->from($this->config->item('table_dos_setup_user').' user');
+            $this->db->join($this->config->item('table_dos_setup_user_info').' user_info','user_info.user_id=user.id');
             $this->db->join($this->config->item('table_login_setup_offices').' office','office.id=user_info.office_id','left');
             $this->db->join($this->config->item('table_login_setup_department').' department','department.id=user_info.department_id','left');
             $this->db->join($this->config->item('table_login_setup_designation').' designation','designation.id=user_info.designation','left');
-            $this->db->join($this->config->item('table_login_setup_user_type').' u_type','u_type.id=user_info.user_type_id','left');
+            $this->db->join($this->config->item('table_dos_setup_user_type').' u_type','u_type.id=user_info.user_type_id','left');
             $this->db->join($this->config->item('table_login_setup_employee_class').' e_class','e_class.id=user_info.employee_class_id','left');
             $this->db->join($this->config->item('table_system_user_group').' u_group','u_group.id=user_info.user_group','left');
             $this->db->where('user.id',$user_id);
@@ -64,7 +64,7 @@ class Profile_info extends Root_Controller
             $data['title']=$data['user_info']['name'];
 
             $this->db->select('comp.*');
-            $this->db->from($this->config->item('table_login_setup_users_company').' u_comp');
+            $this->db->from($this->config->item('table_dos_setup_users_company').' u_comp');
             $this->db->join($this->config->item('table_login_setup_company').' comp','comp.id=u_comp.company_id');
             $this->db->where('u_comp.user_id',$user_id);
             $this->db->where('u_comp.revision',1);
@@ -72,14 +72,14 @@ class Profile_info extends Root_Controller
             $data['assigned_companies']=$this->db->get()->result_array();
 
             $this->db->select('os.*');
-            $this->db->from($this->config->item('table_login_setup_users_other_sites').' uos');
+            $this->db->from($this->config->item('table_dos_setup_users_other_sites').' uos');
             $this->db->join($this->config->item('table_login_system_other_sites').' os','os.id=uos.site_id');
             $this->db->where('uos.user_id',$user_id);
             $this->db->where('uos.revision',1);
             $this->db->order_by('os.ordering');
             $data['assigned_sites']=$this->db->get()->result_array();
 
-            $this->db->from($this->config->item('table_login_setup_user_area').' aa');
+            $this->db->from($this->config->item('table_dos_setup_user_area').' aa');
             $this->db->select('aa.*');
             $this->db->select('union.name union_name');
             $this->db->select('u.name upazilla_name');
@@ -98,7 +98,7 @@ class Profile_info extends Root_Controller
             $data['assigned_area']=$this->db->get()->row_array();
             if($data['assigned_area'])
             {
-                $this->db->from($this->config->item('table_login_setup_user_area').' aa');
+                $this->db->from($this->config->item('table_dos_setup_user_area').' aa');
                 if($data['assigned_area']['division_id']>0)
                 {
                     $this->db->join($this->config->item('table_login_setup_location_divisions').' division','division.id = aa.division_id','INNER');

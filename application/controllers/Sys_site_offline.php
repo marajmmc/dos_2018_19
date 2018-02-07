@@ -36,7 +36,7 @@ class Sys_site_offline extends Root_Controller
             $ajax['system_page_url']=site_url($this->controller_url."/index/add");
 
             $ajax['status']=true;
-            $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view($this->controller_url."/add_edit",$data,true));
+            $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view("sys_site_offline/add_edit",$data,true));
             if($this->message)
             {
                 $ajax['system_message']=$this->message;

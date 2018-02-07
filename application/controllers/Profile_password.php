@@ -70,7 +70,7 @@ class Profile_password extends Root_Controller
             $data['password']=md5($this->input->post('new_password'));
             $data['user_updated'] = $user->user_id;
             $data['date_updated'] = time();
-            Query_helper::update($this->config->item('table_login_setup_user'),$data,array("id = ".$user->user_id));
+            Query_helper::update($this->config->item('table_dos_setup_user'),$data,array("id = ".$user->user_id));
 
             $this->db->trans_complete();   //DB Transaction Handle END
             if ($this->db->trans_status() === TRUE)
@@ -101,7 +101,7 @@ class Profile_password extends Root_Controller
             return false;
         }
         $user = User_helper::get_user();
-        $info=Query_helper::get_info($this->config->item('table_login_setup_user'),array('id'),array('id ='.$user->user_id,'password ="'.md5($this->input->post('old_password')).'"'),1);
+        $info=Query_helper::get_info($this->config->item('table_dos_setup_user'),array('id'),array('id ='.$user->user_id,'password ="'.md5($this->input->post('old_password')).'"'),1);
         /*echo '<PRE>';
         print_r($this->input->post('old_password'));
         print_r($info);

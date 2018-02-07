@@ -36,7 +36,7 @@ class Profile_picture extends Root_Controller
             $user=User_helper::get_user();
             $user_id=$user->user_id;
 
-            $data['user_info']=Query_helper::get_info($this->config->item('table_login_setup_user_info'),array('image_location','name'),array('user_id ='.$user_id,'revision =1'),1);
+            $data['user_info']=Query_helper::get_info($this->config->item('table_dos_setup_user_info'),array('image_location','name'),array('user_id ='.$user_id,'revision =1'),1);
             $data['title']='Change Profile Picture';
 
             $ajax['status']=true;
@@ -85,7 +85,7 @@ class Profile_picture extends Root_Controller
             {
                 if($uploaded_image['image_profile']['status'])
                 {
-                    $data_user_info=Query_helper::get_info($this->config->item('table_login_setup_user_info'),array('*'),array('user_id ='.$user_id,'revision =1'),1);
+                    $data_user_info=Query_helper::get_info($this->config->item('table_dos_setup_user_info'),array('*'),array('user_id ='.$user_id,'revision =1'),1);
                     unset($data_user_info['id']);
                     $data_user_info['user_created'] = $user->user_id;
                     $data_user_info['date_created'] = $time;
@@ -96,15 +96,15 @@ class Profile_picture extends Root_Controller
                     $revision_history_data=array();
                     $revision_history_data['date_updated']=$time;
                     $revision_history_data['user_updated']=$user->user_id;
-                    Query_helper::update($this->config->item('table_login_setup_user_info'),$revision_history_data,array('revision=1','user_id='.$user_id));
+                    Query_helper::update($this->config->item('table_dos_setup_user_info'),$revision_history_data,array('revision=1','user_id='.$user_id));
 
                     $this->db->trans_start();  //DB Transaction Handle START
                     $this->db->where('user_id',$user_id);
                     $this->db->set('revision', 'revision+1', FALSE);
-                    $this->db->update($this->config->item('table_login_setup_user_info'));
+                    $this->db->update($this->config->item('table_dos_setup_user_info'));
 
 
-                    Query_helper::add($this->config->item('table_login_setup_user_info'),$data_user_info);
+                    Query_helper::add($this->config->item('table_dos_setup_user_info'),$data_user_info);
                     $this->db->trans_complete();   //DB Transaction Handle END
                     if ($this->db->trans_status() === TRUE)
                     {

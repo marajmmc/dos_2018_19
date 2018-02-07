@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 $user=User_helper::get_user();
 $CI = & get_instance();
-$sites=User_helper::get_accessed_sites();
 
 ?>
 <div class="row widget">
@@ -70,37 +69,7 @@ $sites=User_helper::get_accessed_sites();
                 </div>
             </div>
         </div>
-
     </div>
-    <?php
-        if(sizeof($sites)>0)
-        {
-            ?>
-            <div class="widget-header">
-                <div class="text-center text-danger underline">
-                    <strong>You will be login with your accessible below application:</strong>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <?php
-            foreach($sites as $site)
-            {
-                ?>
-                <a class="external" target="_blank" href="<?php echo site_url('other_sites_visit/visit_site/'.$site['id']); ?>">
-                    <div class="col-md-3">
-                        <div class="content-box text-center">
-                            <span class="content-box-icon bg-vaiolet">
-                                <img src="<?php echo base_url()?>images/logo.png" alt="" style="width: 100%"/>
-                            </span>
-                            <h4><?php echo strtoupper($site['short_name']);?></h4>
-                        </div>
-                    </div>
-                </a>
-                <?php
-            }
-        }
-    ?>
-
 </div>
 <div class="clearfix"></div>
 <style>

@@ -2,7 +2,7 @@
 <div class="row widget">
     <div class="widget-header">
         <div class="title">
-            Login
+            Data Operation System (DOS)
         </div>
         <div class="clearfix"></div>
     </div>
@@ -12,7 +12,7 @@
             <form action="<?php echo base_url();?>home/login" class="form-horizontal" method="post">
                 <div class="login_header">
                     <h3>
-                        AR Malik
+                        AR Malik 
                         <img alt="Logo" height="40" class="pull-right" src="<?php echo base_url('images/logo.png'); ?>">
                     </h3>
                     <p>Fill out the form below to login.</p>

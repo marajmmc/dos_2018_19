@@ -103,7 +103,7 @@ $autoload['helper'] = array('url','user','query','system','task');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('table_system','table_login','user_group','system');
+$autoload['config'] = array('table_system','table_dos','user_group','system');
 
 /*
 | -------------------------------------------------------------------
