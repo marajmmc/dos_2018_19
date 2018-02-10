@@ -134,7 +134,7 @@ class Setup_users extends Root_Controller
 
         $this->db->from($this->config->item('table_dos_setup_user').' user');
         $this->db->select('user.id,user.employee_id,user.user_name,user.status');
-        $this->db->select('user_info.name,user_info.email,user_info.ordering,user_info.blood_group,user_info.mobile_no');
+        $this->db->select('user_info.name,user_info.email,user_info.ordering,user_info.mobile_no');
         $this->db->select('ug.name group_name');
         $this->db->join($this->config->item('table_dos_setup_user_info').' user_info','user.id = user_info.user_id','INNER');
         $this->db->join($this->config->item('table_system_user_group').' ug','ug.id = user_info.user_group','LEFT');
@@ -151,10 +151,6 @@ class Setup_users extends Root_Controller
             if($item['group_name']==null)
             {
                 $item['group_name']='Not Assigned';
-            }
-            if($item['blood_group']=='')
-            {
-                $item['blood_group']='Not Assigned';
             }
         }
 
