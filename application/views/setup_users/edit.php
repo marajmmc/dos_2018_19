@@ -106,29 +106,6 @@ $CI->load->view('action_buttons',array('action_buttons'=>$action_buttons));
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="external" data-toggle="collapse" data-target="#collapse7" href="#">
-                            Profile Picture</a>
-                    </h4>
-                </div>
-                <div id="collapse7" class="panel-collapse collapse">
-                    <div class="row show-grid">
-                        <div class="col-xs-4">
-                            <label for="image_profile" class="control-label pull-right"><?php echo $CI->lang->line('LABEL_PROFILE_PICTURE');?></label>
-                        </div>
-                        <div class="col-xs-4">
-                            <input type="file" class="browse_button" data-preview-container="#image_profile" name="image_profile">
-                            <input type="hidden" name="user_info[image_name]" value="<?php echo $user_info['image_name']; ?>">
-                            <input type="hidden" name="user_info[image_location]" value="<?php echo $user_info['image_location']; ?>">
-                        </div>
-                        <div class="col-xs-4" id="image_profile">
-                            <img style="max-width: 250px;" src="<?php echo $CI->config->item('system_base_url_profile_picture').$user_info['image_location']; ?>" alt="<?php echo $user_info['name']; ?>">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>

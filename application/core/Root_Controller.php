@@ -17,12 +17,16 @@ abstract class Root_Controller extends CI_Controller
             }
             else
             {
-                if($this->is_site_offline()&&(!(in_array($user->user_group,array(1,2)))))
+                /*if($this->is_site_offline()&&(!(in_array($user->user_group,array(1,2)))))
                 {
                     if(!in_array(strtolower($this->router->class),$this->config->item('offline_controllers')))
                     {
                         $this->dashboard_page();
                     }
+                }*/
+                if(!(in_array($user->user_group,array(1,2))))
+                {
+                    $this->dashboard_page();
                 }
             }
         }
@@ -37,25 +41,6 @@ abstract class Root_Controller extends CI_Controller
         header('Content-type: application/json');
         echo json_encode($array);
         exit();
-    }
-    public function is_site_offline()
-    {
-        $info=Query_helper::get_info($this->config->item('table_system_site_offline'),'*',array(),1,0,array('id DESC'));
-        if($info)
-        {
-            if($info['status']==$this->config->item('system_status_active'))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
     }
     public function login_page($message="")
     {

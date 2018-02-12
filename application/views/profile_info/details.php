@@ -10,14 +10,6 @@ $CI=& get_instance();
     </div>
     <div class="clearfix"></div>
 </div>
-<div class="row show-grid">
-    <div class="col-xs-4">
-        <label class="control-label pull-right"><?php echo $CI->lang->line('LABEL_PROFILE_PICTURE');?></label>
-    </div>
-    <div class="col-sm-8">
-        <img style="max-width: 250px;" src="<?php echo $CI->config->item('system_base_url_profile_picture').$user_info['image_location']; ?>" alt="<?php echo $user_info['name']; ?>">
-    </div>
-</div>
 <div class="panel-group" id="accordion">
 <div class="panel panel-default">
     <div class="panel-heading">

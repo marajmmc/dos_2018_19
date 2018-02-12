@@ -60,14 +60,6 @@ class Setup_users extends Root_Controller
         {
             $this->system_save_status();
         }
-        elseif($action=="set_preference")
-        {
-            $this->system_set_preference();
-        }
-        elseif($action=="save_preference")
-        {
-            System_helper::save_preference();
-        }
         elseif($action=="change_user_group")
         {
             $this->system_change_user_group($id);
@@ -85,32 +77,6 @@ class Setup_users extends Root_Controller
     {
         if(isset($this->permissions['action0']) && ($this->permissions['action0']==1))
         {
-            $user = User_helper::get_user();
-            $result=Query_helper::get_info($this->config->item('table_system_user_preference'),'*',array('user_id ='.$user->user_id,'controller ="' .$this->controller_url.'"','method ="list"'),1);
-            $data['system_preference_items']['id']= 1;
-            $data['system_preference_items']['user_name']= 1;
-            $data['system_preference_items']['name']= 1;
-            $data['system_preference_items']['group_name']= 1;
-            $data['system_preference_items']['status']= 1;
-            if($result)
-            {
-                if($result['preferences']!=null)
-                {
-                    $preferences=json_decode($result['preferences'],true);
-                    foreach($data['system_preference_items'] as $key=>$value)
-                    {
-                        if(isset($preferences[$key]))
-                        {
-                            $data['system_preference_items'][$key]=$value;
-                        }
-                        else
-                        {
-                            $data['system_preference_items'][$key]=0;
-                        }
-                    }
-                }
-            }
-
             $data['title']='List of Users';
             $ajax['status']=true;
             $ajax['system_content'][]=array('id'=>'#system_content','html'=>$this->load->view($this->controller_url.'/list',$data,true));
@@ -131,10 +97,9 @@ class Setup_users extends Root_Controller
     private function system_get_items()
     {
         $user = User_helper::get_user();
-
         $this->db->from($this->config->item('table_dos_setup_user').' user');
         $this->db->select('user.id,user.employee_id,user.user_name,user.status');
-        $this->db->select('user_info.name,user_info.email,user_info.ordering,user_info.mobile_no');
+        $this->db->select('user_info.name');
         $this->db->select('ug.name group_name');
         $this->db->join($this->config->item('table_dos_setup_user_info').' user_info','user.id = user_info.user_id','INNER');
         $this->db->join($this->config->item('table_system_user_group').' ug','ug.id = user_info.user_group','LEFT');
@@ -161,6 +126,7 @@ class Setup_users extends Root_Controller
     {
         if(isset($this->permissions['action1']) && ($this->permissions['action1']==1))
         {
+            $user=User_helper::get_user();
             $data['title']='Create New User';
             $data['user'] = array(
                 'id' => 0,
@@ -177,6 +143,14 @@ class Setup_users extends Root_Controller
                 'designation' => '',
                 'ordering' => 999
             );
+            if($user->user_group==1)
+            {
+                $data['user_groups']=Query_helper::get_info($this->config->item('table_system_user_group'),array('id value','name text'),array('status ="'.$this->config->item('system_status_active').'"'));
+            }
+            else
+            {
+                $data['user_groups']=Query_helper::get_info($this->config->item('table_system_user_group'),array('id value','name text'),array('status ="'.$this->config->item('system_status_active').'"','id !=1'));
+            }
             $ajax['system_page_url']=site_url($this->controller_url.'/index/add');
             $ajax['status']=true;
             $ajax['system_content'][]=array('id'=>'#system_content','html'=>$this->load->view($this->controller_url.'/add',$data,true));
@@ -316,27 +290,6 @@ class Setup_users extends Root_Controller
         }
         else
         {
-            $dir=(FCPATH).'images/profiles/'.$id;
-            if(!is_dir($dir))
-            {
-                mkdir($dir, 0777);
-            }
-            $uploaded_image = System_helper::upload_file('images/profiles/'.$id);
-            if(array_key_exists('image_profile',$uploaded_image))
-            {
-                if(!$uploaded_image['image_profile']['status'])
-                {
-                    $ajax['status']=false;
-                    $ajax['system_message']=$uploaded_image['image_profile']['message'];
-                    $this->json_return($ajax);
-                }
-                $data_user_info['image_name']=$uploaded_image['image_profile']['info']['file_name'];
-                $data_user_info['image_location']='images/profiles/'.$id.'/'.$uploaded_image['image_profile']['info']['file_name'];
-            }
-
-            /// user info
-
-
             if(isset($data_user_info['date_birth']))
             {
                 $data_user_info['date_birth']=System_helper::get_time($data_user_info['date_birth']);
@@ -353,7 +306,6 @@ class Setup_users extends Root_Controller
                     unset($data_user_info['date_join']);
                 }
             }
-
 
             $revision_history_data=array();
             $revision_history_data['date_updated']=$time;
@@ -878,46 +830,5 @@ class Setup_users extends Root_Controller
             return false;
         }
         return true;
-    }
-    private function system_set_preference()
-    {
-        if(isset($this->permissions['action6']) && ($this->permissions['action6']==1))
-        {
-            $user = User_helper::get_user();
-            $result=Query_helper::get_info($this->config->item('table_system_user_preference'),'*',array('user_id ='.$user->user_id,'controller ="' .$this->controller_url.'"','method ="list"'),1);
-            $data['system_preference_items']['id']= 1;
-            $data['system_preference_items']['user_name']= 1;
-            $data['system_preference_items']['name']= 1;
-            $data['system_preference_items']['group_name']= 1;
-            $data['system_preference_items']['status']= 1;
-            if($result)
-            {
-                if($result['preferences']!=null)
-                {
-                    $preferences=json_decode($result['preferences'],true);
-                    foreach($data['system_preference_items'] as $key=>$value)
-                    {
-                        if(isset($preferences[$key]))
-                        {
-                            $data['system_preference_items'][$key]=$value;
-                        }
-                        else
-                        {
-                            $data['system_preference_items'][$key]=0;
-                        }
-                    }
-                }
-            }
-            $ajax['status']=true;
-            $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view("preference_add_edit",$data,true));
-            $ajax['system_page_url']=site_url($this->controller_url.'/index/set_preference');
-            $this->json_return($ajax);
-        }
-        else
-        {
-            $ajax['status']=false;
-            $ajax['system_message']=$this->lang->line("YOU_DONT_HAVE_ACCESS");
-            $this->json_return($ajax);
-        }
     }
 }
