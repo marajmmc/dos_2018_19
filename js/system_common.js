@@ -217,50 +217,65 @@ $(document).ready(function()
                 var path=URL.createObjectURL(file);
                 if(container)
                 {
-                    var img_tag='<img height="'+preview_height+'" src="'+path+'" >';
-                    $(container).html(img_tag);
-                }
-                var img=new Image();
-                img.src=path;
-                img.onload=function()
-                {
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 600;
-                    var width = img.naturalWidth;
-                    var height = img.naturalHeight;
-                    if((width>MAX_WIDTH)||(height>MAX_HEIGHT))
+                    var img_tag='';
+                    if($(this).attr('data-preview-width'))
                     {
-                        if((width/height)>(MAX_WIDTH/MAX_HEIGHT))
-                        {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                        else
-                        {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                        var canvas = document.createElement("canvas");
-                        canvas.width = width;
-                        canvas.height = height;
-                        var context = canvas.getContext("2d");
-                        context.drawImage(img, 0, 0, width, height);
-                        canvas.toBlob(function(blob)
-                        {
-                            system_resized_image_files[system_resized_image_files.length]={
-                                key:key,
-                                value:blob,
-                                name:file_name+'.png'
-                            };
-                            //saveAs(blob, file.name);
-                            input_file.val(null);
-                            //input_file.parent().find('.badge').remove();
-                        });
-                        //console.log('with resize');
-
+                        var preview_width=$(this).attr('data-preview-width');
+                        img_tag='<img width="'+preview_width+'" src="'+path+'" >';
+                        $(container).html(img_tag);
                     }
-                    //console.log('without resize');
-                };
+                    else
+                    {
+                        img_tag='<img height="'+preview_height+'" src="'+path+'" >';
+                        $(container).html(img_tag);
+                    }
+                }
+                //if filesize is lower(less than 1.3mb) no need to resize
+                if(file.size>1372022)
+                {
+                    var img=new Image();
+                    img.src=path;
+                    img.onload=function()
+                    {
+                        var MAX_WIDTH = 800;
+                        var MAX_HEIGHT = 600;
+                        var width = img.naturalWidth;
+                        var height = img.naturalHeight;
+
+                        if((width>MAX_WIDTH)||(height>MAX_HEIGHT))
+                        {
+                            if((width/height)>(MAX_WIDTH/MAX_HEIGHT))
+                            {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                            else
+                            {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                            var canvas = document.createElement("canvas");
+                            canvas.width = width;
+                            canvas.height = height;
+                            var context = canvas.getContext("2d");
+                            context.drawImage(img, 0, 0, width, height);
+                            canvas.toBlob(function(blob)
+                            {
+                                system_resized_image_files[system_resized_image_files.length]={
+                                    key:key,
+                                    value:blob,
+                                    name:file_name+'.png'
+                                };
+                                //saveAs(blob, file.name);
+                                input_file.val(null);
+                                //input_file.parent().find('.badge').remove();
+                            });
+                            //console.log('with resize');
+
+                        }
+                        //console.log('without resize');
+                    };
+                }
             }
             else if(container)
             {
