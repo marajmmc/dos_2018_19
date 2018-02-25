@@ -129,7 +129,7 @@ $CI->load->view('action_buttons',array('action_buttons'=>$action_buttons));
                 showfilterrow: true,
                 columnsresize: true,
                 pagesize:50,
-                pagesizeoptions: ['20', '50', '100', '200','300','500'],
+                pagesizeoptions: ['200', '500', '1000', '2000','3000','5000'],
                 selectionmode: 'singlerow',
                 enablebrowserselection: true,
                 columnsreorder: true,
