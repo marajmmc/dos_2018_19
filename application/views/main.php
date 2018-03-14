@@ -9,7 +9,7 @@ $CI = & get_instance();
         <link rel="icon" type="image/ico" href="http://malikseeds.com/favicon.ico"/>
         <meta charset="utf-8">
         <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css');?>">
-        <link rel="stylesheet" href="<?php echo base_url('css/style.css');?>">
+        <link rel="stylesheet" href="<?php echo base_url('css/style.css?version='.time());?>">
         <link rel="stylesheet" href="<?php echo base_url('css/jquery-ui/jquery-ui.min.css'); ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/jquery-ui/jquery-ui.theme.css'); ?>">
 
