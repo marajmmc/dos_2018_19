@@ -137,17 +137,86 @@ class Report_sms_stock_variety_summary extends Root_Controller
             if($result['pack_size_id']==0)
             {
                 $varieties[$result['variety_id']][$result['pack_size_id']]['pack_size']='Bulk';
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_in_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_excess_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_delivery_short_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_ww_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_convert_bulk_pack_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_lc_pkt']=0;
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_sample_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_rnd_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_demonstration_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_short_inventory_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_delivery_excess_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_convert_bulk_pack_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_ww_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_wo_pkt']=0;
+
+
                 $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_pkt']=0;
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['pack_size']='Bulk';
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_in_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_excess_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_delivery_short_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_ww_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_convert_bulk_pack_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_lc_kg']=0;
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_sample_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_rnd_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_demonstration_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_short_inventory_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_delivery_excess_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_convert_bulk_pack_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_ww_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_wo_kg']=0;
+
                 $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_kg']=$result['current_stock'];
             }
             else
             {
                 $varieties[$result['variety_id']][$result['pack_size_id']]['pack_size']=$result['pack_size'];
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['pack_size']='Bulk';
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_in_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_excess_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_delivery_short_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_ww_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_convert_bulk_pack_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_lc_pkt']=0;
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_sample_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_rnd_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_demonstration_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_short_inventory_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_delivery_excess_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_convert_bulk_pack_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_ww_pkt']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_wo_pkt']=0;
+
                 $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_pkt']=$result['current_stock'];
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['pack_size']='Bulk';
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_in_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_excess_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_stock_delivery_short_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_ww_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_convert_bulk_pack_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_in_lc_kg']=0;
+
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_sample_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_rnd_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_demonstration_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_short_inventory_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_stock_delivery_excess_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_convert_bulk_pack_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_ww_kg']=0;
+                $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_out_wo_kg']=0;
+
                 $varieties[$result['variety_id']][$result['pack_size_id']]['warehouse_'.$result['warehouse_id'].'_kg']=$result['current_stock']*$result['pack_size']/1000;
             }
-
-
         }
 
 
@@ -169,8 +238,42 @@ class Report_sms_stock_variety_summary extends Root_Controller
         $grand_total['pack_size']=$crop_total['pack_size']=$type_total['pack_size']='';
         foreach($warehouses as $warehouse)
         {
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']=$type_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']=0;
+
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']=$type_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']=0;
+
             $grand_total['warehouse_'.$warehouse['value'].'_pkt']=$crop_total['warehouse_'.$warehouse['value'].'_pkt']=$type_total['warehouse_'.$warehouse['value'].'_pkt']=0;
+
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_ww_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_ww_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_ww_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_in_lc_kg']=$crop_total['warehouse_'.$warehouse['value'].'_in_lc_kg']=$type_total['warehouse_'.$warehouse['value'].'_in_lc_kg']=0;
+
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_ww_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_ww_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_ww_kg']=0;
+            $grand_total['warehouse_'.$warehouse['value'].'_out_wo_kg']=$crop_total['warehouse_'.$warehouse['value'].'_out_wo_kg']=$type_total['warehouse_'.$warehouse['value'].'_out_wo_kg']=0;
+
             $grand_total['warehouse_'.$warehouse['value'].'_kg']=$crop_total['warehouse_'.$warehouse['value'].'_kg']=$type_total['warehouse_'.$warehouse['value'].'_kg']=0;
+
         }
         $grand_total['current_stock_pkt']=$crop_total['current_stock_pkt']=$type_total['current_stock_pkt']=0;
         $grand_total['current_stock_kg']=$crop_total['current_stock_kg']=$type_total['current_stock_kg']=0;
@@ -217,12 +320,124 @@ class Report_sms_stock_variety_summary extends Root_Controller
                 {
                     if(isset($pack['warehouse_'.$warehouse['value'].'_pkt'])&&($pack['warehouse_'.$warehouse['value'].'_pkt']>0))
                     {
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_lc_pkt']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_ww_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_pkt'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_pkt'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_pkt'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_wo_pkt']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_pkt'];
+
                         $type_total['warehouse_'.$warehouse['value'].'_pkt']+=$pack['warehouse_'.$warehouse['value'].'_pkt'];
                         $crop_total['warehouse_'.$warehouse['value'].'_pkt']+=$pack['warehouse_'.$warehouse['value'].'_pkt'];
                         $grand_total['warehouse_'.$warehouse['value'].'_pkt']+=$pack['warehouse_'.$warehouse['value'].'_pkt'];
                     }
                     if(isset($pack['warehouse_'.$warehouse['value'].'_kg'])&&($pack['warehouse_'.$warehouse['value'].'_kg']>0))
                     {
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_in_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_in_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_excess_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_ww_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_in_lc_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_in_lc_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_in_lc_kg']+=$pack['warehouse_'.$warehouse['value'].'_in_lc_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_sample_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_ww_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_ww_kg'];
+
+                        $type_total['warehouse_'.$warehouse['value'].'_out_wo_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_kg'];
+                        $crop_total['warehouse_'.$warehouse['value'].'_out_wo_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_kg'];
+                        $grand_total['warehouse_'.$warehouse['value'].'_out_wo_kg']+=$pack['warehouse_'.$warehouse['value'].'_out_wo_kg'];
+
                         $type_total['warehouse_'.$warehouse['value'].'_kg']+=$pack['warehouse_'.$warehouse['value'].'_kg'];
                         $crop_total['warehouse_'.$warehouse['value'].'_kg']+=$pack['warehouse_'.$warehouse['value'].'_kg'];
                         $grand_total['warehouse_'.$warehouse['value'].'_kg']+=$pack['warehouse_'.$warehouse['value'].'_kg'];
@@ -253,21 +468,87 @@ class Report_sms_stock_variety_summary extends Root_Controller
             if(isset($info['warehouse_'.$warehouse['value'].'_pkt'])&&($info['warehouse_'.$warehouse['value'].'_pkt']>0))
             {
                 $row['current_stock_pkt']+=$info['warehouse_'.$warehouse['value'].'_pkt'];
-                $row['warehouse_'.$warehouse['value'].'_pkt']=$info['warehouse_'.$warehouse['value'].'_pkt'];
 
+                $row['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']=$info['warehouse_'.$warehouse['value'].'_in_stock_in_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']=$info['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']=$info['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_in_ww_pkt']=$info['warehouse_'.$warehouse['value'].'_in_ww_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']=$info['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_in_lc_pkt']=$info['warehouse_'.$warehouse['value'].'_in_lc_pkt'];
+
+                $row['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']=$info['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']=$info['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']=$info['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']=$info['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']=$info['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']=$info['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_ww_pkt']=$info['warehouse_'.$warehouse['value'].'_out_ww_pkt'];
+                $row['warehouse_'.$warehouse['value'].'_out_wo_pkt']=$info['warehouse_'.$warehouse['value'].'_out_wo_pkt'];
+
+                $row['warehouse_'.$warehouse['value'].'_pkt']=$info['warehouse_'.$warehouse['value'].'_pkt'];
             }
             else
             {
+                $row['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_in_ww_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_in_lc_pkt']='';
+
+                $row['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_ww_pkt']='';
+                $row['warehouse_'.$warehouse['value'].'_out_wo_pkt']='';
+
                 $row['warehouse_'.$warehouse['value'].'_pkt']='';
+
             }
 
             if(isset($info['warehouse_'.$warehouse['value'].'_kg'])&&($info['warehouse_'.$warehouse['value'].'_kg']>0))
             {
                 $row['current_stock_kg']+=$info['warehouse_'.$warehouse['value'].'_kg'];
+
+                $row['warehouse_'.$warehouse['value'].'_in_stock_in_kg']=$info['warehouse_'.$warehouse['value'].'_in_stock_in_kg'];
+                $row['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']=$info['warehouse_'.$warehouse['value'].'_in_stock_excess_kg'];
+                $row['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']=$info['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg'];
+                $row['warehouse_'.$warehouse['value'].'_in_ww_kg']=$info['warehouse_'.$warehouse['value'].'_in_ww_kg'];
+                $row['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']=$info['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg'];
+                $row['warehouse_'.$warehouse['value'].'_in_lc_kg']=$info['warehouse_'.$warehouse['value'].'_in_lc_kg'];
+
+                $row['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']=$info['warehouse_'.$warehouse['value'].'_out_stock_sample_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']=$info['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']=$info['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']=$info['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']=$info['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']=$info['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_ww_kg']=$info['warehouse_'.$warehouse['value'].'_out_ww_kg'];
+                $row['warehouse_'.$warehouse['value'].'_out_wo_kg']=$info['warehouse_'.$warehouse['value'].'_out_wo_kg'];
+
                 $row['warehouse_'.$warehouse['value'].'_kg']=number_format($info['warehouse_'.$warehouse['value'].'_kg'],3,'.','');
             }
             else
             {
+                $row['warehouse_'.$warehouse['value'].'_in_stock_in_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_in_ww_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_in_lc_kg']='';
+
+                $row['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_ww_kg']='';
+                $row['warehouse_'.$warehouse['value'].'_out_wo_kg']='';
+
                 $row['warehouse_'.$warehouse['value'].'_kg']='';
             }
         }
@@ -291,7 +572,40 @@ class Report_sms_stock_variety_summary extends Root_Controller
     {
         foreach($warehouses as $warehouse)
         {
+            $info['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_ww_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_lc_pkt']='';
+
+            $info['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_ww_pkt']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_wo_pkt']=0;
+
             $info['warehouse_'.$warehouse['value'].'_pkt']=0;
+
+            $info['warehouse_'.$warehouse['value'].'_in_stock_in_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_ww_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_in_lc_kg']=0;
+
+            $info['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_ww_kg']=0;
+            $info['warehouse_'.$warehouse['value'].'_out_wo_kg']=0;
+
             $info['warehouse_'.$warehouse['value'].'_kg']=0;
         }
         return $info;
@@ -325,7 +639,41 @@ class Report_sms_stock_variety_summary extends Root_Controller
         $data['pack_size']= 1;
         foreach($warehouses as $warehouse)
         {
+            $data['warehouse_'.$warehouse['value'].'_in_stock_in_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_stock_excess_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_ww_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_lc_pkt']= 1;
+
+            $data['warehouse_'.$warehouse['value'].'_out_stock_sample_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_rnd_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_demonstration_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_ww_pkt']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_wo_pkt']= 1;
+
+
             $data['warehouse_'.$warehouse['value'].'_pkt']= 1;
+
+            //$data['warehouse_'.$warehouse['value'].'_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_stock_in_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_stock_excess_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_stock_delivery_short_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_ww_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_convert_bulk_pack_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_in_lc_kg']= 1;
+
+            $data['warehouse_'.$warehouse['value'].'_out_stock_sample_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_rnd_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_demonstration_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_short_inventory_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_stock_delivery_excess_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_convert_bulk_pack_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_ww_kg']= 1;
+            $data['warehouse_'.$warehouse['value'].'_out_wo_kg']= 1;
             $data['warehouse_'.$warehouse['value'].'_kg']= 1;
         }
         //$data['system_preference_items']['current_stock']= 1;
