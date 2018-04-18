@@ -327,16 +327,16 @@ $lang['LABEL_HYBRID']='Hybrid';
 $lang['LABEL_WAREHOUSE_NAME']='Warehouse Name';
 $lang['LABEL_WAREHOUSE_NAME_SOURCE']='Source Warehouse';
 $lang['LABEL_WAREHOUSE_NAME_DESTINATION']='Destination Warehouse';
-$lang['LABEL_WAREHOUSE_1_PKT'] = '1st Floor(pkt)';
-$lang['LABEL_WAREHOUSE_1_KG'] = '1st Floor(kg)';
-$lang['LABEL_WAREHOUSE_2_PKT'] = '2nd Floor(pkt)';
-$lang['LABEL_WAREHOUSE_2_KG'] = '2nd Floor(kg)';
-$lang['LABEL_WAREHOUSE_3_PKT'] = '3rd Floor(pkt)';
-$lang['LABEL_WAREHOUSE_3_KG'] = '3rd Floor(kg)';
-$lang['LABEL_WAREHOUSE_4_PKT'] = '4th Floor(pkt)';
-$lang['LABEL_WAREHOUSE_4_KG'] = '4th Floor(kg)';
-$lang['LABEL_WAREHOUSE_5_PKT'] = 'Siddique Bazar(pkt)';
-$lang['LABEL_WAREHOUSE_5_KG'] = 'Siddique Bazar(kg)';
+//$lang['LABEL_WAREHOUSE_1_PKT'] = '1st Floor(pkt)';
+//$lang['LABEL_WAREHOUSE_1_KG'] = '1st Floor(kg)';
+//$lang['LABEL_WAREHOUSE_2_PKT'] = '2nd Floor(pkt)';
+//$lang['LABEL_WAREHOUSE_2_KG'] = '2nd Floor(kg)';
+//$lang['LABEL_WAREHOUSE_3_PKT'] = '3rd Floor(pkt)';
+//$lang['LABEL_WAREHOUSE_3_KG'] = '3rd Floor(kg)';
+//$lang['LABEL_WAREHOUSE_4_PKT'] = '4th Floor(pkt)';
+//$lang['LABEL_WAREHOUSE_4_KG'] = '4th Floor(kg)';
+//$lang['LABEL_WAREHOUSE_5_PKT'] = 'Siddique Bazar(pkt)';
+//$lang['LABEL_WAREHOUSE_5_KG'] = 'Siddique Bazar(kg)';
 
 // Office staff
 $lang['LABEL_NUMBER_OF_SUBORDINATE'] = 'Number Of Subordinate';
