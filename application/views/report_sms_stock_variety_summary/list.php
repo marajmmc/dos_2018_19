@@ -37,16 +37,18 @@ $CI->load->view('action_buttons',array('action_buttons'=>$action_buttons));
 <div class="row widget">
     <div class="widget-header">
         <div class="title">
-            <?php echo $title; ?>
+            <label class=""><a class="external text-danger" data-toggle="collapse" data-target="#collapse_preference" href="#">+ Preference</a></label>
         </div>
         <div class="clearfix"></div>
     </div>
-    <?php
-    if(isset($CI->permissions['action6']) && ($CI->permissions['action6']==1))
-    {
-        $CI->load->view('preference',array('system_preference_items'=>$system_preference_items));
-    }
-    ?>
+    <div id="collapse_preference" class="panel-collapse collapse">
+        <?php
+        if(isset($CI->permissions['action6']) && ($CI->permissions['action6']==1))
+        {
+            $CI->load->view('preference',array('system_preference_items'=>$system_preference_items));
+        }
+        ?>
+    </div>
     <div class="col-xs-12" id="system_jqx_container">
 
     </div>
