@@ -111,7 +111,7 @@ class Sms_lc_rollback extends Root_Controller
                 $ajax['system_message']='LC already deleted.';
                 $this->json_return($ajax);
             }
-            if($data['item']['status_open']==$this->config->item('system_status_closed'))
+            if($data['item']['status_open']==$this->config->item('system_status_complete'))
             {
                 $data['item']['message']='Current Status : Closed <br /> New Status: Received';
             }
@@ -208,7 +208,7 @@ class Sms_lc_rollback extends Root_Controller
 
         $this->db->trans_start();  //DB Transaction Handle START
 
-        if($item['status_open']==$this->config->item('system_status_closed'))
+        if($item['status_open']==$this->config->item('system_status_complete'))
         {
             // Rollback closed to receive.
             // Set status status_open = system_status_active
