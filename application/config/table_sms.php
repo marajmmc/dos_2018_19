@@ -19,12 +19,21 @@ $config['table_sms_lc_open_histories'] = 'arm_sms_2018_19.sms_lc_open_histories'
 $config['table_sms_lc_release_histories'] = 'arm_sms_2018_19.sms_lc_release_histories';
 $config['table_sms_lc_receive_histories'] = 'arm_sms_2018_19.sms_lc_receive_histories';
 
-// Setup
-$config['table_sms_setup_currency'] = 'arm_bms_2017_08.bms_setup_currency';
-$config['table_sms_direct_cost_items'] = 'arm_bms_2017_08.bms_setup_direct_cost_items';
-
 //Transfer
-$config['table_sms_transfer_warehouse_variety'] = 'arm_sms_2018_19.sms_transfer_warehouse_variety';
+/* Warehouse to warehouse*/
+$config['table_sms_transfer_ww'] = 'arm_sms_2018_19.sms_transfer_ww';
+/* Head office to outlet (TO) */
+$config['table_sms_transfer_wo'] = 'arm_sms_2018_19.sms_transfer_wo';
+$config['table_sms_transfer_wo_details'] = 'arm_sms_2018_19.sms_transfer_wo_details';
+$config['table_sms_transfer_wo_details_histories'] = 'arm_sms_2018_19.sms_transfer_wo_details_histories';
+$config['table_sms_transfer_wo_courier_details'] = 'arm_sms_2018_19.sms_transfer_wo_courier_details';
+$config['table_sms_transfer_wo_receive_solves'] = 'arm_sms_2018_19.sms_transfer_wo_receive_solves';
+/* Outlet to Head office (TO) */
+$config['table_sms_transfer_ow'] = 'arm_sms_2018_19.sms_transfer_ow';
+$config['table_sms_transfer_ow_details'] = 'arm_sms_2018_19.sms_transfer_ow_details';
+$config['table_sms_transfer_ow_details_histories'] = 'arm_sms_2018_19.sms_transfer_ow_details_histories';
+$config['table_sms_transfer_ow_courier_details'] = 'arm_sms_2018_19.sms_transfer_ow_courier_details';
+$config['table_sms_transfer_ow_receive_solves'] = 'arm_sms_2018_19.sms_transfer_ow_receive_solves';
 
 //Raw Materials
 
@@ -63,3 +72,6 @@ $config['table_sms_stock_out_raw_sticker_details'] = 'arm_sms_2018_19.sms_stock_
 
 //Stock Out Common Foil
 $config['table_sms_stock_out_raw_foil'] = 'arm_sms_2018_19.sms_stock_out_raw_foil';
+
+//Convert
+$config['table_sms_convert_bulk_to_pack'] = 'arm_sms_2018_19.sms_convert_bulk_to_pack';

@@ -113,7 +113,7 @@ class Sms_lc_rollback extends Root_Controller
             }
             if($data['item']['status_open']==$this->config->item('system_status_complete'))
             {
-                $data['item']['message']='Current Status : Closed <br /> New Status: Received';
+                $data['item']['message']='Current Status : LC Completed <br /> New Status: Received';
             }
             elseif($data['item']['status_receive']==$this->config->item('system_status_complete'))
             {
@@ -153,12 +153,20 @@ class Sms_lc_rollback extends Root_Controller
     }
     private function system_save()
     {
+        $user = User_helper::get_user();
+        $time=time();
         $item_id = $this->input->post("id");
         $item_head=$this->input->post('item');
         if(!(isset($this->permissions['action2']) && ($this->permissions['action2']==1)))
         {
             $ajax['status']=false;
             $ajax['system_message']=$this->lang->line("YOU_DONT_HAVE_ACCESS");
+            $this->json_return($ajax);
+        }
+        if(!($item_head['reason']))
+        {
+            $ajax['status']=false;
+            $ajax['system_message']='Reason field is required.';
             $this->json_return($ajax);
         }
         if($item_head['rollback']!=$this->config->item('system_status_yes'))
@@ -193,7 +201,7 @@ class Sms_lc_rollback extends Root_Controller
             {
                 $variety_ids[$lc_detail['variety_id']]=$lc_detail['variety_id'];
             }
-            $current_stocks=System_helper::get_variety_stock($variety_ids);
+            $current_stocks=Stock_helper::get_variety_stock($variety_ids);
 
             foreach($lc_details as $lc_detail)
             {
@@ -206,6 +214,30 @@ class Sms_lc_rollback extends Root_Controller
             }
         }
 
+        /* remarks massage */
+        if($item['status_open']==$this->config->item('system_status_complete'))
+        {
+            $remarks="Current Status : LC Completed \n New Status: Received";
+        }
+        elseif($item['status_receive']==$this->config->item('system_status_complete'))
+        {
+            $remarks="Current Status : Received \n New Status: Receive Pending";
+        }
+        elseif($item['status_release']==$this->config->item('system_status_complete'))
+        {
+            $remarks="Current Status : Released (Receive Pending)\n New Status: Release Pending";
+        }
+        elseif($item['status_open_forward']==$this->config->item('system_status_yes'))
+        {
+            $remarks="Current Status : Forwarded (Release Pending) \n New Status: LC Open";
+        }
+        else
+        {
+            $ajax['status']=false;
+            $ajax['system_message']='Nothing to rollback.';
+            $this->json_return($ajax);
+        }
+
         $this->db->trans_start();  //DB Transaction Handle START
 
         if($item['status_open']==$this->config->item('system_status_complete'))
@@ -215,6 +247,20 @@ class Sms_lc_rollback extends Root_Controller
             $data=array();
             $data['status_open']=$this->config->item('system_status_active');
             Query_helper::update($this->config->item('table_sms_lc_open'),$data,array('id='.$item_id));
+
+            $data=array();
+            $data['site'] = 'SMS_2018_19';
+            $data['reference_id'] = $item_id;
+            $data['controller_name'] = $this->controller_url;
+            $data['field_name'] = 'status_open';
+            $data['current_status'] = $this->config->item('system_status_complete');
+            $data['new_status']=$this->config->item('system_status_active');
+            $data['old_data']=json_encode($item);
+            $data['remarks']=$remarks;
+            $data['reason']=$item_head['reason'];
+            $data['date_created'] = $time;
+            $data['user_created'] = $user->user_id;
+            Query_helper::add($this->config->item('table_dos_rollback_status'),$data);
         }
         elseif($item['status_receive']==$this->config->item('system_status_complete'))
         {
@@ -232,6 +278,20 @@ class Sms_lc_rollback extends Root_Controller
                 $data['in_lc']=($current_stocks[$lc_detail['variety_id']][$lc_detail['pack_size_id']][$lc_detail['receive_warehouse_id']]['in_lc']-$lc_detail['quantity_receive']);
                 Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$lc_detail['variety_id'],'pack_size_id='.$lc_detail['pack_size_id'],'warehouse_id='.$lc_detail['receive_warehouse_id']));
             }
+
+            $data=array();
+            $data['site'] = 'SMS_2018_19';
+            $data['reference_id'] = $item_id;
+            $data['controller_name'] = $this->controller_url;
+            $data['field_name'] = 'status_receive';
+            $data['current_status'] = $this->config->item('system_status_complete');
+            $data['new_status']=$this->config->item('system_status_pending');
+            $data['old_data']=json_encode($item);
+            $data['remarks']=$remarks;
+            $data['reason']=$item_head['reason'];
+            $data['date_created'] = $time;
+            $data['user_created'] = $user->user_id;
+            Query_helper::add($this->config->item('table_dos_rollback_status'),$data);
         }
         elseif($item['status_release']==$this->config->item('system_status_complete'))
         {
@@ -240,6 +300,20 @@ class Sms_lc_rollback extends Root_Controller
             $data=array();
             $data['status_release']=$this->config->item('system_status_pending');
             Query_helper::update($this->config->item('table_sms_lc_open'),$data,array('id='.$item_id));
+
+            $data=array();
+            $data['site'] = 'SMS_2018_19';
+            $data['reference_id'] = $item_id;
+            $data['controller_name'] = $this->controller_url;
+            $data['field_name'] = 'status_release';
+            $data['current_status'] = $this->config->item('system_status_complete');
+            $data['new_status']=$this->config->item('system_status_pending');
+            $data['old_data']=json_encode($item);
+            $data['remarks']=$remarks;
+            $data['reason']=$item_head['reason'];
+            $data['date_created'] = $time;
+            $data['user_created'] = $user->user_id;
+            Query_helper::add($this->config->item('table_dos_rollback_status'),$data);
         }
         elseif($item['status_open_forward']==$this->config->item('system_status_yes'))
         {
@@ -248,6 +322,20 @@ class Sms_lc_rollback extends Root_Controller
             $data=array();
             $data['status_open_forward']=$this->config->item('system_status_no');
             Query_helper::update($this->config->item('table_sms_lc_open'),$data,array('id='.$item_id));
+
+            $data=array();
+            $data['site'] = 'SMS_2018_19';
+            $data['reference_id'] = $item_id;
+            $data['controller_name'] = $this->controller_url;
+            $data['field_name'] = 'status_open_forward';
+            $data['current_status'] = $this->config->item('system_status_yes');
+            $data['new_status']=$this->config->item('system_status_no');
+            $data['old_data']=json_encode($item);
+            $data['remarks']=$remarks;
+            $data['reason']=$item_head['reason'];
+            $data['date_created'] = $time;
+            $data['user_created'] = $user->user_id;
+            Query_helper::add($this->config->item('table_dos_rollback_status'),$data);
         }
         else
         {

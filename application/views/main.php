@@ -85,7 +85,6 @@ if($result)
         <link rel="stylesheet" href="<?php echo base_url('css/jquery-ui/jquery-ui.theme.css'); ?>">
 
         <link rel="stylesheet" href="<?php echo base_url('css/jqx/jqx.base.css'); ?>">
-        <link rel="stylesheet" href="<?php echo base_url('css/print.css');?>">
         <style>
             .navbar-nav > li {
                 background-color: <?php echo $menu_odd_color ?>;
