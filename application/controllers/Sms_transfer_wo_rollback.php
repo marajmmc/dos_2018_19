@@ -397,6 +397,20 @@ class Sms_transfer_wo_rollback extends Root_Controller
                             $data['in_wo']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_wo']-$result['quantity_receive']);
                             Query_helper::update($this->config->item('table_pos_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'outlet_id='.$item['outlet_id']));
                         }
+
+                        $data = array();
+                        $data['site'] = 'SMS_2018_19';
+                        $data['reference_id'] = $item_id;
+                        $data['controller_name'] = $this->controller_url;
+                        $data['field_name'] = 'status_receive';
+                        $data['current_status'] = $this->config->item('system_status_received');
+                        $data['new_status'] = $this->config->item('system_status_pending');
+                        $data['old_data'] = json_encode($item);
+                        $data['remarks'] = $remarks;
+                        $data['reason'] = $item_head['reason'];
+                        $data['date_created'] = $time;
+                        $data['user_created'] = $user->user_id;
+                        Query_helper::add($this->config->item('table_dos_rollback_status'), $data);
                     }
                     else
                     {
@@ -408,6 +422,20 @@ class Sms_transfer_wo_rollback extends Root_Controller
                             $data=array();
                             $data['status_receive_forward']=$this->config->item('system_status_pending');
                             Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+
+                            $data = array();
+                            $data['site'] = 'SMS_2018_19';
+                            $data['reference_id'] = $item_id;
+                            $data['controller_name'] = $this->controller_url;
+                            $data['field_name'] = 'status_receive_forward';
+                            $data['current_status'] = $this->config->item('system_status_forwarded');
+                            $data['new_status'] = $this->config->item('system_status_pending');
+                            $data['old_data'] = json_encode($item);
+                            $data['remarks'] = $remarks;
+                            $data['reason'] = $item_head['reason'];
+                            $data['date_created'] = $time;
+                            $data['user_created'] = $user->user_id;
+                            Query_helper::add($this->config->item('table_dos_rollback_status'), $data);
                         }
                         elseif($item['status_receive_forward']==$this->config->item('system_status_forwarded') && $item['status_receive_approve']==$this->config->item('system_status_approved'))
                         {
@@ -442,6 +470,20 @@ class Sms_transfer_wo_rollback extends Root_Controller
                                 $data['in_wo']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_wo']-$result['quantity_receive']);
                                 Query_helper::update($this->config->item('table_pos_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'outlet_id='.$item['outlet_id']));
                             }
+
+                            $data = array();
+                            $data['site'] = 'SMS_2018_19';
+                            $data['reference_id'] = $item_id;
+                            $data['controller_name'] = $this->controller_url;
+                            $data['field_name'] = 'status_receive_approve';
+                            $data['current_status'] = $this->config->item('system_status_approved');
+                            $data['new_status'] = $this->config->item('system_status_pending');
+                            $data['old_data'] = json_encode($item);
+                            $data['remarks'] = $remarks;
+                            $data['reason'] = $item_head['reason'];
+                            $data['date_created'] = $time;
+                            $data['user_created'] = $user->user_id;
+                            Query_helper::add($this->config->item('table_dos_rollback_status'), $data);
                         }
                         else
                         {
@@ -468,19 +510,19 @@ class Sms_transfer_wo_rollback extends Root_Controller
                                 Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
                             }
 
-                            /*$data=array();
+                            $data = array();
                             $data['site'] = 'SMS_2018_19';
                             $data['reference_id'] = $item_id;
                             $data['controller_name'] = $this->controller_url;
                             $data['field_name'] = 'status_delivery';
-                            $data['current_status'] = $this->config->item('system_status_forwarded');
-                            $data['new_status']=$this->config->item('system_status_pending');
-                            $data['old_data']=json_encode($item);
-                            $data['remarks']=$remarks;
-                            $data['reason']=$item_head['reason'];
+                            $data['current_status'] = $this->config->item('system_status_delivered');
+                            $data['new_status'] = $this->config->item('system_status_pending');
+                            $data['old_data'] = json_encode($item);
+                            $data['remarks'] = $remarks;
+                            $data['reason'] = $item_head['reason'];
                             $data['date_created'] = $time;
                             $data['user_created'] = $user->user_id;
-                            Query_helper::add($this->config->item('table_dos_rollback_status'),$data);*/
+                            Query_helper::add($this->config->item('table_dos_rollback_status'), $data);
                         }
                     }
                 }
