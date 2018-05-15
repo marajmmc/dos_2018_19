@@ -115,4 +115,27 @@ class System_helper
         }
     }
 
+    public static function get_users_info($user_ids)
+    {
+        //can be upgrade select field from user_info
+        //but no more join query
+        $CI =& get_instance();
+        $CI->db->from($CI->config->item('table_login_setup_user').' user');
+        $CI->db->select('user.id,user.employee_id,user.user_name,user.status');
+        $CI->db->join($CI->config->item('table_login_setup_user_info').' user_info','user.id = user_info.user_id','INNER');
+        $CI->db->select('user_info.name,user_info.ordering,user_info.blood_group,user_info.mobile_no');
+        $CI->db->where('user_info.revision',1);
+        if(sizeof($user_ids)>0)
+        {
+            $CI->db->where_in('user.id',$user_ids);
+        }
+        $results=$CI->db->get()->result_array();
+        $users=array();
+        foreach($results as $result)
+        {
+            $users[$result['id']]=$result;
+        }
+        return $users;
+    }
+
 }
