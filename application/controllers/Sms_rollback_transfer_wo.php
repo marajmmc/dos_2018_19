@@ -444,17 +444,14 @@ class Sms_rollback_transfer_wo extends Root_Controller
                         }
                         elseif($item['status_receive_forward']==$this->config->item('system_status_forwarded') && $item['status_receive_approve']==$this->config->item('system_status_approved'))
                         {
-                            $item['message']='Current Status : HQ to outlet transfer receive approved. <br /> New Status: Receive forward pending. {Outlet Stock Out (reverse) & check outlet stock available}';
-                            // Outlet Stock Out (reverse) & check outlet stock available
-
                             // Outlet office Stock Out
                             // Rollback transfer receive approved to Receive approved pending.
                             // Set status_receive_approve = system_status_pending
                             $data=array();
                             $data['status_receive']=$this->config->item('system_status_pending');
-                            $data['status_receive_forward']=$this->config->item('system_status_pending');
+                            //$data['status_receive_forward']=$this->config->item('system_status_pending');
                             $data['status_receive_approve']=$this->config->item('system_status_pending');
-                            $data['status_system_delivery_receive']=$this->config->item('system_status_yes');
+                            //$data['status_system_delivery_receive']=$this->config->item('system_status_yes');
                             Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
 
                             $data=array();
