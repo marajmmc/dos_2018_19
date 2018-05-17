@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Sms_rollback_transfer_wo extends Root_Controller
+class Sms_rollback_transfer_ow extends Root_Controller
 {
     public $message;
     public $permissions;
@@ -45,7 +45,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
     {
         if(isset($this->permissions['action0'])&&($this->permissions['action0']==1))
         {
-            $data['title']="HQ to Outlet Transfer All List";
+            $data['title']="Outlet to HQ Transfer All List";
             $ajax['status']=true;
             $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view($this->controller_url."/list",$data,true));
             if($this->message)
@@ -78,23 +78,23 @@ class Sms_rollback_transfer_wo extends Root_Controller
         {
             $pagesize=$pagesize*2;
         }
-        $this->db->from($this->config->item('table_sms_transfer_wo').' transfer_wo');
+        $this->db->from($this->config->item('table_sms_transfer_ow').' transfer_ow');
         $this->db->select(
             '
-            transfer_wo.id,
-            transfer_wo.date_request,
-            transfer_wo.quantity_total_request_kg quantity_total_request,
-            transfer_wo.quantity_total_approve_kg quantity_total_approve,
-            transfer_wo.quantity_total_receive_kg quantity_total_receive,
-            transfer_wo.status, transfer_wo.status_request,
-            transfer_wo.status_approve,
-            transfer_wo.status_delivery,
-            transfer_wo.status_receive,
-            transfer_wo.status_receive_forward,
-            transfer_wo.status_receive_approve,
-            transfer_wo.status_system_delivery_receive
+            transfer_ow.id,
+            transfer_ow.date_request,
+            transfer_ow.quantity_total_request_kg quantity_total_request,
+            transfer_ow.quantity_total_approve_kg quantity_total_approve,
+            transfer_ow.quantity_total_receive_kg quantity_total_receive,
+            transfer_ow.status, transfer_ow.status_request,
+            transfer_ow.status_approve,
+            transfer_ow.status_delivery,
+            transfer_ow.status_receive,
+            transfer_ow.status_receive_forward,
+            transfer_ow.status_receive_approve,
+            transfer_ow.status_system_delivery_receive
             ');
-        $this->db->join($this->config->item('table_login_csetup_cus_info').' outlet_info','outlet_info.customer_id=transfer_wo.outlet_id AND outlet_info.type="'.$this->config->item('system_customer_type_outlet_id').'"','INNER');
+        $this->db->join($this->config->item('table_login_csetup_cus_info').' outlet_info','outlet_info.customer_id=transfer_ow.outlet_id AND outlet_info.type="'.$this->config->item('system_customer_type_outlet_id').'"','INNER');
         $this->db->select('outlet_info.name outlet_name, outlet_info.customer_code outlet_code');
         $this->db->join($this->config->item('table_login_setup_location_districts').' districts','districts.id = outlet_info.district_id','INNER');
         $this->db->select('districts.name district_name');
@@ -105,7 +105,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
         $this->db->join($this->config->item('table_login_setup_location_divisions').' divisions','divisions.id = zones.division_id','INNER');
         $this->db->select('divisions.name division_name');
         $this->db->where('outlet_info.revision',1);
-        $this->db->order_by('transfer_wo.id','DESC');
+        $this->db->order_by('transfer_ow.id','DESC');
         $this->db->limit($pagesize,$current_records);
         $results=$this->db->get()->result_array();
         $items=array();
@@ -162,21 +162,21 @@ class Sms_rollback_transfer_wo extends Root_Controller
                 $item_id=$this->input->post('id');
             }
 
-            $this->db->from($this->config->item('table_sms_transfer_wo').' transfer_wo');
-            $this->db->select('transfer_wo.*');
-            $this->db->where('transfer_wo.id',$item_id);
+            $this->db->from($this->config->item('table_sms_transfer_ow').' transfer_ow');
+            $this->db->select('transfer_ow.*');
+            $this->db->where('transfer_ow.id',$item_id);
             $data['item']=$this->db->get()->row_array();
             if(!$data['item'])
             {
                 $ajax['status']=false;
-                $ajax['system_message']='HQ to outlet transfer order not found.';
+                $ajax['system_message']='Outlet to HQ transfer order not found.';
                 $this->json_return($ajax);
             }
 
             if($data['item']['status']==$this->config->item('system_status_delete'))
             {
                 $ajax['status']=false;
-                $ajax['system_message']='HQ to Outlet transfer order already deleted.';
+                $ajax['system_message']='Outlet to HQ transfer order already deleted.';
                 $this->json_return($ajax);
             }
 
@@ -188,41 +188,41 @@ class Sms_rollback_transfer_wo extends Root_Controller
                     {
                         if($data['item']['status_receive']==$this->config->item('system_status_received') && $data['item']['status_system_delivery_receive']==$this->config->item('system_status_yes'))
                         {
-                            $data['item']['message']='Current Status : HQ to outlet transfer received. <br /> New Status: Receive pending. {normal receive: Outlet Stock Out (reverse) & check outlet stock available}';
-                            // Outlet Stock Out (reverse) & check outlet stock available
+                            $data['item']['message']='Current Status : Outlet to HQ transfer received. <br /> New Status: Receive pending. {normal receive: HQ Stock In (reverse)}';
+                            // HQ Stock In (reverse) & check outlet stock available
                         }
                         else
                         {
                             if($data['item']['status_receive_forward']==$this->config->item('system_status_forwarded') && $data['item']['status_receive_approve']==$this->config->item('system_status_pending'))
                             {
-                                $data['item']['message']='Current Status : HQ to outlet transfer receive forwarded. <br /> New Status: Receive forward pending.';
+                                $data['item']['message']='Current Status : Outlet to HQ transfer receive forwarded. <br /> New Status: Receive forward pending.';
                             }
                             elseif($data['item']['status_receive_forward']==$this->config->item('system_status_forwarded') && $data['item']['status_receive_approve']==$this->config->item('system_status_approved'))
                             {
-                                $data['item']['message']='Current Status : HQ to outlet transfer receive approved. <br /> New Status: Receive approve pending. {Outlet Stock Out (reverse) & check outlet stock available}';
-                                // Outlet Stock Out (reverse) & check outlet stock available
+                                $data['item']['message']='Current Status : Outlet to HQ transfer receive approved. <br /> New Status: Receive approve pending. {HQ Stock In (reverse)}';
+                                // HQ Stock In (reverse) & check outlet stock available
                             }
                             else
                             {
-                                $data['item']['message']='Current Status : HQ to outlet transfer delivered. <br /> New Status: Delivery pending. {Head office Stock reverse}';
-                                // Head office Stock reverse
+                                $data['item']['message']='Current Status : Outlet to HQ transfer delivered. <br /> New Status: Delivery pending. {Outlet Stock out (reverse) & outlet stock available checking}';
+                                // Outlet Stock out (reverse) & outlet stock available checking
                             }
                         }
                     }
                     else
                     {
-                        $data['item']['message']='Current Status : HQ to outlet transfer approved. <br /> New Status: Approve pending.';
+                        $data['item']['message']='Current Status : Outlet to HQ transfer approved. <br /> New Status: Approve pending.';
                     }
                 }
                 else
                 {
                     if($data['item']['status_approve']==$this->config->item('system_status_rejected'))
                     {
-                        $data['item']['message']='Current Status : HQ to outlet transfer rejected. <br /> New Status: Approve pending.';
+                        $data['item']['message']='Current Status : Outlet to HQ transfer rejected. <br /> New Status: Approve pending.';
                     }
                     else
                     {
-                        $data['item']['message']='Current Status : HQ to outlet transfer forwarded. <br /> New Status: Request forwarded pending.';
+                        $data['item']['message']='Current Status : Outlet to HQ transfer forwarded. <br /> New Status: Request forwarded pending.';
                     }
                 }
             }
@@ -233,7 +233,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
                 $this->json_return($ajax);
             }
 
-            $data['title']='HQ to Outlet Transfer Rollback';
+            $data['title']='Outlet to HQ Transfer Rollback';
             $ajax['status']=true;
             $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view($this->controller_url."/edit",$data,true));
             if($this->message)
@@ -276,21 +276,21 @@ class Sms_rollback_transfer_wo extends Root_Controller
         }
 
 
-        $this->db->from($this->config->item('table_sms_transfer_wo').' transfer_wo');
-        $this->db->select('transfer_wo.*');
-        $this->db->where('transfer_wo.id',$item_id);
+        $this->db->from($this->config->item('table_sms_transfer_ow').' transfer_ow');
+        $this->db->select('transfer_ow.*');
+        $this->db->where('transfer_ow.id',$item_id);
         $item=$this->db->get()->row_array();
         if(!$item)
         {
             $ajax['status']=false;
-            $ajax['system_message']='HQ to outlet transfer order not found.';
+            $ajax['system_message']='Outlet to HQ transfer order not found.';
             $this->json_return($ajax);
         }
 
         if($item['status']==$this->config->item('system_status_delete'))
         {
             $ajax['status']=false;
-            $ajax['system_message']='HQ to Outlet transfer order already deleted.';
+            $ajax['system_message']='Outlet to HQ transfer order already deleted.';
             $this->json_return($ajax);
         }
         /* remarks massage */
@@ -303,74 +303,73 @@ class Sms_rollback_transfer_wo extends Root_Controller
                 {
                     if($item['status_receive']==$this->config->item('system_status_received') && $item['status_system_delivery_receive']==$this->config->item('system_status_yes'))
                     {
-                        $remarks="Current Status : HQ to outlet transfer received. \n New Status: Receive pending. {normal receive: Outlet Stock Out (reverse) & check outlet stock available}";
-                        // Outlet Stock Out (reverse) & check outlet stock available
-                        $results=Query_helper::get_info($this->config->item('table_sms_transfer_wo_details'),'*',array('transfer_wo_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
+                        $remarks="Current Status : Outlet to HQ transfer received. \n New Status: Receive pending. {normal receive: Outlet Stock Out (reverse) & check outlet stock available}";
+                        // Outlet Stock Out (reverse)
+                        $results=Query_helper::get_info($this->config->item('table_sms_transfer_ow_details'),'*',array('transfer_ow_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
                         $variety_ids=array();
                         foreach($results as $result)
                         {
                             $variety_ids[$result['variety_id']]=$result['variety_id'];
                         }
-                        $current_stocks=Stock_helper::get_variety_stock_outlet($item['outlet_id'],$variety_ids);
+                        $current_stocks=Stock_helper::get_variety_stock($variety_ids);
                         foreach($results as $result)
                         {
-                            if(!isset($current_stocks[$result['variety_id']][$result['pack_size_id']]) || !($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock'])>$result['quantity_receive'])
+                            if(!isset($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]) || !($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock'])>$result['quantity_receive'])
                             {
                                 $ajax['status']=false;
-                                $ajax['system_message']='Outlet stock will be negative.';
+                                $ajax['system_message']='HQ stock will be negative.';
                                 $this->json_return($ajax);
                             }
                         }
-
                     }
                     else
                     {
                         if($item['status_receive_forward']==$this->config->item('system_status_forwarded') && $item['status_receive_approve']==$this->config->item('system_status_pending'))
                         {
-                            $remarks="Current Status : HQ to outlet transfer receive forwarded. \n New Status: Receive forward pending.";
+                            $remarks="Current Status : Outlet to HQ transfer receive forwarded. \n New Status: Receive forward pending.";
                         }
                         elseif($item['status_receive_forward']==$this->config->item('system_status_forwarded') && $item['status_receive_approve']==$this->config->item('system_status_approved'))
                         {
-                            $remarks="Current Status : HQ to outlet transfer receive approved. \n New Status: Receive approve pending. {Outlet Stock Out (reverse) & check outlet stock available}";
-                            // Outlet Stock Out (reverse) & check outlet stock available
-                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_wo_details'),'*',array('transfer_wo_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
+                            $remarks="Current Status : Outlet to HQ transfer receive approved. \n New Status: Receive approve pending. {Outlet Stock Out (reverse) & check outlet stock available}";
+                            // Outlet Stock Out (reverse)
+                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_ow_details'),'*',array('transfer_ow_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
                             $variety_ids=array();
                             foreach($results as $result)
                             {
                                 $variety_ids[$result['variety_id']]=$result['variety_id'];
                             }
-                            $current_stocks=Stock_helper::get_variety_stock_outlet($item['outlet_id'],$variety_ids);
+                            $current_stocks=Stock_helper::get_variety_stock($variety_ids);
                             foreach($results as $result)
                             {
-                                if(!isset($current_stocks[$result['variety_id']][$result['pack_size_id']]) || !($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock'])>$result['quantity_receive'])
+                                if(!isset($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]) || !($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock'])>$result['quantity_receive'])
                                 {
                                     $ajax['status']=false;
-                                    $ajax['system_message']='Outlet stock will be negative.';
+                                    $ajax['system_message']='HQ stock will be negative.';
                                     $this->json_return($ajax);
                                 }
                             }
                         }
                         else
                         {
-                            $remarks="Current Status : HQ to outlet transfer delivered. \n New Status: Delivery pending. {Head office Stock reverse}";
+                            $remarks="Current Status : Outlet to HQ transfer delivered. \n New Status: Delivery pending. {Head office Stock reverse}";
                             // Head office Stock reverse
                         }
                     }
                 }
                 else
                 {
-                    $remarks="Current Status : HQ to outlet transfer approved. \n New Status: Approve pending.";
+                    $remarks="Current Status : Outlet to HQ transfer approved. \n New Status: Approve pending.";
                 }
             }
             else
             {
                 if($item['status_approve']==$this->config->item('system_status_rejected'))
                 {
-                    $remarks="Current Status : HQ to outlet transfer rejected. \n New Status: Approve pending.";
+                    $remarks="Current Status : Outlet to HQ transfer rejected. \n New Status: Approve pending.";
                 }
                 else
                 {
-                    $remarks="Current Status : HQ to outlet transfer forwarded. \n New Status: Request forwarded pending.";
+                    $remarks="Current Status : Outlet to HQ transfer forwarded. \n New Status: Request forwarded pending.";
                 }
             }
         }
@@ -400,22 +399,22 @@ class Sms_rollback_transfer_wo extends Root_Controller
                         $data['status_receive']=$this->config->item('system_status_pending');
                         $data['status_receive_forward']=$this->config->item('system_status_pending');
                         $data['status_receive_approve']=$this->config->item('system_status_pending');
-                        Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                        Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
-                        $results=Query_helper::get_info($this->config->item('table_sms_transfer_wo_details'),'*',array('transfer_wo_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
+                        $results=Query_helper::get_info($this->config->item('table_sms_transfer_ow_details'),'*',array('transfer_ow_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
                         $variety_ids=array();
                         foreach($results as $result)
                         {
                             $variety_ids[$result['variety_id']]=$result['variety_id'];
                         }
-                        $current_stocks=Stock_helper::get_variety_stock_outlet($item['outlet_id'],$variety_ids);
+                        $current_stocks=Stock_helper::get_variety_stock($variety_ids);
                         // current stock update
                         foreach($results as $result)
                         {
                             $data=array();
-                            $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock']-$result['quantity_receive']);
-                            $data['in_wo']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_wo']-$result['quantity_receive']);
-                            Query_helper::update($this->config->item('table_pos_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'outlet_id='.$item['outlet_id']));
+                            $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock']-$result['quantity_receive']);
+                            $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_ow']-$result['quantity_receive']);
+                            Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
                         }
 
                         $data = array();
@@ -442,7 +441,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
                             $data=array();
                             $data['status_receive_forward']=$this->config->item('system_status_pending');
                             $data['status_system_delivery_receive']=$this->config->item('system_status_yes');
-                            Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                            Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
                             $data = array();
                             $data['site'] = 'SMS_2018_19';
@@ -467,26 +466,26 @@ class Sms_rollback_transfer_wo extends Root_Controller
                             $data['status_receive']=$this->config->item('system_status_pending');
                             $data['status_receive_approve']=$this->config->item('system_status_pending');
                             $data['status_system_delivery_receive']=$this->config->item('system_status_no');
-                            Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                            Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
                             $data=array();
                             $data['status']=$this->config->item('system_status_delete');
-                            Query_helper::update($this->config->item('table_sms_transfer_wo_receive_solves'),$data,array('transfer_wo_id='.$item_id));
+                            Query_helper::update($this->config->item('table_sms_transfer_ow_receive_solves'),$data,array('transfer_ow_id='.$item_id));
 
-                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_wo_details'),'*',array('transfer_wo_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
+                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_ow_details'),'*',array('transfer_ow_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
                             $variety_ids=array();
                             foreach($results as $result)
                             {
                                 $variety_ids[$result['variety_id']]=$result['variety_id'];
                             }
-                            $current_stocks=Stock_helper::get_variety_stock_outlet($item['outlet_id'],$variety_ids);
+                            $current_stocks=Stock_helper::get_variety_stock($variety_ids);
                             // current stock update
                             foreach($results as $result)
                             {
                                 $data=array();
-                                $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock']-$result['quantity_receive']);
-                                $data['in_wo']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_wo']-$result['quantity_receive']);
-                                Query_helper::update($this->config->item('table_pos_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'outlet_id='.$item['outlet_id']));
+                                $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock']-$result['quantity_receive']);
+                                $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_ow']-$result['quantity_receive']);
+                                Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
                             }
 
                             $data = array();
@@ -510,22 +509,22 @@ class Sms_rollback_transfer_wo extends Root_Controller
                             // Set status_delivery = system_status_pending
                             $data=array();
                             $data['status_delivery']=$this->config->item('system_status_pending');
-                            Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                            Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
-                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_wo_details'),'*',array('transfer_wo_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
+                            $results=Query_helper::get_info($this->config->item('table_sms_transfer_ow_details'),'*',array('transfer_ow_id='.$item_id,"status='".$this->config->item('system_status_active')."'"));
                             $variety_ids=array();
                             foreach($results as $result)
                             {
                                 $variety_ids[$result['variety_id']]=$result['variety_id'];
                             }
-                            $current_stocks=Stock_helper::get_variety_stock($variety_ids);
+                            $current_stocks=Stock_helper::get_variety_stock_outlet($item['outlet_id'],$variety_ids);
                             // current stock update
                             foreach($results as $result)
                             {
                                 $data=array();
-                                $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock']+$result['quantity_approve']);
-                                $data['out_wo']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['out_wo']-$result['quantity_approve']);
-                                Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
+                                $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock']+$result['quantity_approve']);
+                                $data['out_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['out_ow']-$result['quantity_approve']);
+                                Query_helper::update($this->config->item('table_pos_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'outlet_id='.$item['outlet_id']));
                             }
 
                             $data = array();
@@ -550,7 +549,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
                     // Set status_approve = system_status_pending
                     $data=array();
                     $data['status_approve']=$this->config->item('system_status_pending');
-                    Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                    Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
                     $data=array();
                     $data['site'] = 'SMS_2018_19';
@@ -575,7 +574,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
                     // Set status_approve = system_status_pending
                     $data=array();
                     $data['status_approve']=$this->config->item('system_status_pending');
-                    Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                    Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
                     $data=array();
                     $data['site'] = 'SMS_2018_19';
@@ -597,7 +596,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
                     // Set status_request = system_status_pending
                     $data=array();
                     $data['status_request']=$this->config->item('system_status_pending');
-                    Query_helper::update($this->config->item('table_sms_transfer_wo'),$data,array('id='.$item_id));
+                    Query_helper::update($this->config->item('table_sms_transfer_ow'),$data,array('id='.$item_id));
 
                     $data=array();
                     $data['site'] = 'SMS_2018_19';
@@ -645,9 +644,9 @@ class Sms_rollback_transfer_wo extends Root_Controller
             {
                 $item_id=$this->input->post('id');
             }
-            $this->db->from($this->config->item('table_sms_transfer_wo').' transfer_wo');
-            $this->db->select('transfer_wo.*');
-            $this->db->join($this->config->item('table_login_csetup_cus_info').' outlet_info','outlet_info.customer_id=transfer_wo.outlet_id AND outlet_info.type="'.$this->config->item('system_customer_type_outlet_id').'"','INNER');
+            $this->db->from($this->config->item('table_sms_transfer_ow').' transfer_ow');
+            $this->db->select('transfer_ow.*');
+            $this->db->join($this->config->item('table_login_csetup_cus_info').' outlet_info','outlet_info.customer_id=transfer_ow.outlet_id AND outlet_info.type="'.$this->config->item('system_customer_type_outlet_id').'"','INNER');
             $this->db->select('outlet_info.customer_id outlet_id, outlet_info.name outlet_name, outlet_info.customer_code outlet_code');
             $this->db->join($this->config->item('table_login_setup_location_districts').' districts','districts.id = outlet_info.district_id','INNER');
             $this->db->select('districts.id district_id, districts.name district_name');
@@ -657,9 +656,11 @@ class Sms_rollback_transfer_wo extends Root_Controller
             $this->db->select('zones.id zone_id, zones.name zone_name');
             $this->db->join($this->config->item('table_login_setup_location_divisions').' divisions','divisions.id = zones.division_id','INNER');
             $this->db->select('divisions.id division_id, divisions.name division_name');
-            $this->db->join($this->config->item('table_pos_setup_user_info').' pos_setup_user_info','pos_setup_user_info.user_id=transfer_wo.user_updated_receive_forward','LEFT');
-            $this->db->select('pos_setup_user_info.name full_name_receive_forward');
-            $this->db->join($this->config->item('table_sms_transfer_wo_courier_details').' wo_courier_details','wo_courier_details.transfer_wo_id=transfer_wo.id','LEFT');
+            $this->db->join($this->config->item('table_pos_setup_user_info').' pos_setup_user_info','pos_setup_user_info.user_id=transfer_ow.user_updated_delivery','LEFT');
+            $this->db->select('pos_setup_user_info.name full_name_delivery_edit');
+            $this->db->join($this->config->item('table_pos_setup_user_info').' pos_setup_user_info_forward','pos_setup_user_info_forward.user_id=transfer_ow.user_updated_delivery_forward','LEFT');
+            $this->db->select('pos_setup_user_info_forward.name full_name_delivery_forward');
+            $this->db->join($this->config->item('table_sms_transfer_ow_courier_details').' wo_courier_details','wo_courier_details.transfer_ow_id=transfer_ow.id','LEFT');
             $this->db->select('
                                 wo_courier_details.date_delivery courier_date_delivery,
                                 wo_courier_details.date_challan,
@@ -672,10 +673,10 @@ class Sms_rollback_transfer_wo extends Root_Controller
                                 ');
             $this->db->join($this->config->item('table_login_basic_setup_couriers').' courier','courier.id=wo_courier_details.courier_id','LEFT');
             $this->db->select('courier.name courier_name');
-            $this->db->where('transfer_wo.status !=',$this->config->item('system_status_delete'));
-            $this->db->where('transfer_wo.id',$item_id);
+            $this->db->where('transfer_ow.status !=',$this->config->item('system_status_delete'));
+            $this->db->where('transfer_ow.id',$item_id);
             $this->db->where('outlet_info.revision',1);
-            $this->db->order_by('transfer_wo.id','DESC');
+            $this->db->order_by('transfer_ow.id','DESC');
             $data['item']=$this->db->get()->row_array();
             if(!$data['item'])
             {
@@ -691,25 +692,24 @@ class Sms_rollback_transfer_wo extends Root_Controller
             $user_ids[$data['item']['user_updated_forward']]=$data['item']['user_updated_forward'];
             $user_ids[$data['item']['user_updated_approve']]=$data['item']['user_updated_approve'];
             $user_ids[$data['item']['user_updated_approve_forward']]=$data['item']['user_updated_approve_forward'];
-            $user_ids[$data['item']['user_updated_delivery']]=$data['item']['user_updated_delivery'];
-            $user_ids[$data['item']['user_updated_delivery_forward']]=$data['item']['user_updated_delivery_forward'];
-            $user_ids[$data['item']['user_updated_receive_approve']]=$data['item']['user_updated_receive_approve'];
+            $user_ids[$data['item']['user_updated_receive']]=$data['item']['user_updated_receive'];
+            $user_ids[$data['item']['user_updated_receive_forward']]=$data['item']['user_updated_receive_forward'];
             $data['users']=System_helper::get_users_info($user_ids);
 
-            $this->db->from($this->config->item('table_sms_transfer_wo_details').' transfer_wo_details');
-            $this->db->select('transfer_wo_details.*');
-            $this->db->join($this->config->item('table_login_setup_classification_varieties').' v','v.id=transfer_wo_details.variety_id','INNER');
+            $this->db->from($this->config->item('table_sms_transfer_ow_details').' transfer_ow_details');
+            $this->db->select('transfer_ow_details.*');
+            $this->db->join($this->config->item('table_login_setup_classification_varieties').' v','v.id=transfer_ow_details.variety_id','INNER');
             $this->db->select('v.name variety_name');
             $this->db->join($this->config->item('table_login_setup_classification_crop_types').' crop_type','crop_type.id=v.crop_type_id','INNER');
             $this->db->select('crop_type.id crop_type_id, crop_type.name crop_type_name');
             $this->db->join($this->config->item('table_login_setup_classification_crops').' crop','crop.id=crop_type.crop_id','INNER');
             $this->db->select('crop.id crop_id, crop.name crop_name');
-            $this->db->where('transfer_wo_details.transfer_wo_id',$item_id);
-            $this->db->where('transfer_wo_details.status',$this->config->item('system_status_active'));
-            $this->db->order_by('transfer_wo_details.id');
+            $this->db->where('transfer_ow_details.transfer_ow_id',$item_id);
+            $this->db->where('transfer_ow_details.status',$this->config->item('system_status_active'));
+            $this->db->order_by('transfer_ow_details.id');
             $data['items']=$this->db->get()->result_array();
 
-            $data['title']="HQ to Outlet Transfer Details";
+            $data['title']="Outlet to HQ Transfer Details";
             $ajax['status']=true;
             $ajax['system_content'][]=array("id"=>"#system_content","html"=>$this->load->view($this->controller_url."/details",$data,true));
             if($this->message)
@@ -726,5 +726,4 @@ class Sms_rollback_transfer_wo extends Root_Controller
             $this->json_return($ajax);
         }
     }
-
 }
