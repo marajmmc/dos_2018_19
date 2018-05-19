@@ -413,7 +413,7 @@ class Sms_rollback_transfer_ow extends Root_Controller
                         {
                             $data=array();
                             $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock']-$result['quantity_receive']);
-                            $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_ow']-$result['quantity_receive']);
+                            $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['in_ow']-$result['quantity_receive']);
                             Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
                         }
 
@@ -484,7 +484,7 @@ class Sms_rollback_transfer_ow extends Root_Controller
                             {
                                 $data=array();
                                 $data['current_stock']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['current_stock']-$result['quantity_receive']);
-                                $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']]['in_ow']-$result['quantity_receive']);
+                                $data['in_ow']=($current_stocks[$result['variety_id']][$result['pack_size_id']][$result['warehouse_id']]['in_ow']-$result['quantity_receive']);
                                 Query_helper::update($this->config->item('table_sms_stock_summary_variety'),$data,array('variety_id='.$result['variety_id'],'pack_size_id='.$result['pack_size_id'],'warehouse_id='.$result['warehouse_id']));
                             }
 
