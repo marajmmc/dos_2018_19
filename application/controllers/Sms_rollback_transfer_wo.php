@@ -72,7 +72,7 @@ class Sms_rollback_transfer_wo extends Root_Controller
         $pagesize = $this->input->post('pagesize');
         if(!$pagesize)
         {
-            $pagesize=100;
+            $pagesize=1000;
         }
         else
         {

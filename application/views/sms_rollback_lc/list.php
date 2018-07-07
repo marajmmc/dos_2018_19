@@ -26,6 +26,12 @@ $action_buttons[]=array(
     'label'=>$CI->lang->line("ACTION_REFRESH"),
     'href'=>site_url($CI->controller_url.'/index/list')
 );
+
+$action_buttons[]=array(
+    'type'=>'button',
+    'label'=>$CI->lang->line("ACTION_LOAD_MORE"),
+    'id'=>'button_jqx_load_more'
+);
 $CI->load->view('action_buttons',array('action_buttons'=>$action_buttons));
 
 ?>
@@ -75,16 +81,15 @@ $CI->load->view('action_buttons',array('action_buttons'=>$action_buttons));
                 sortable: true,
                 showfilterrow: true,
                 columnsresize: true,
-                pagesize:50,
+                pagesize:500,
                 pagesizeoptions: ['200', '500', '1000', '2000','3000','5000'],
                 selectionmode: 'singlerow',
                 altrows: true,
-                autoheight: true,
-                autorowheight: true,
+                height: '350px',
                 columnsreorder: true,
                 columns:
                 [
-                    { text: '<?php echo $CI->lang->line('LABEL_ID'); ?>', dataField: 'id', width:80, cellsAlign:'right'},
+                    { text: '<?php echo $CI->lang->line('LABEL_ID'); ?>', dataField: 'id', width:50, cellsAlign:'right'},
                     { text: 'Status', dataField: 'status_open',filtertype: 'list'},
                     { text: 'Status Forward', dataField: 'status_open_forward',filtertype: 'list'},
                     { text: 'Status Release', dataField: 'status_release',filtertype: 'list'},
