@@ -177,7 +177,7 @@ class Sms_rollback_transfer_oo extends Root_Controller
                     {
                         if($data['item']['status_receive']==$this->config->item('system_status_received') && $data['item']['status_system_delivery_receive']==$this->config->item('system_status_yes'))
                         {
-                            $data['item']['message']='Current Status : Showroom to Showroom transfer received. <br /> New Status: Receive pending. {normal receive: Destination Showroom Stock In (reverse)}';
+                            $data['item']['message']='Current Status : Showroom to Showroom transfer received. <br /> New Status: Receive pending. {normal receive: Destination Showroom Stock In (reverse) & Destination Showroom stock available checking}';
                             // HQ Stock In (reverse) & check outlet stock available
                         }
                         else
@@ -193,7 +193,7 @@ class Sms_rollback_transfer_oo extends Root_Controller
                             }
                             else
                             {
-                                $data['item']['message']='Current Status : Showroom to Showroom transfer delivered. <br /> New Status: Delivery pending. {Source Showroom Stock out (reverse) & Source Showroom stock available checking}';
+                                $data['item']['message']='Current Status : Showroom to Showroom transfer delivered. <br /> New Status: Delivery pending. {Source Showroom Stock out (reverse)}';
                                 // Outlet Stock out (reverse) & outlet stock available checking
                             }
                         }
@@ -306,7 +306,7 @@ class Sms_rollback_transfer_oo extends Root_Controller
                             if(!isset($current_stocks[$result['variety_id']][$result['pack_size_id']]) || !($current_stocks[$result['variety_id']][$result['pack_size_id']]['current_stock'])>$result['quantity_receive'])
                             {
                                 $ajax['status']=false;
-                                $ajax['system_message']='HQ stock will be negative.';
+                                $ajax['system_message']='Destination Showroom stock will be negative.';
                                 $this->json_return($ajax);
                             }
                         }
