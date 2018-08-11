@@ -17,6 +17,7 @@ $config['system_status_approved']='Approved';
 $config['system_status_delivered']='Delivered';
 $config['system_status_received']='Received';
 $config['system_status_rejected']='Rejected';
+$config['system_status_paid']='Paid';
 
 
 $config['system_status_not_done']='Not Done';
