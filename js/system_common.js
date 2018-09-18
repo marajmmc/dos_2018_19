@@ -417,7 +417,7 @@ $(document).ready(function()
                 url: $(this).attr('data-action-link'),
                 type: 'POST',
                 dataType: "JSON",
-                data:{'id':selectedRowData.id},
+                data:selectedRowData,
                 success: function (data, status)
                 {
 
