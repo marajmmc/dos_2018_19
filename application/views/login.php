@@ -12,8 +12,8 @@
             <form action="<?php echo base_url();?>home/login" class="form-horizontal" method="post">
                 <div class="login_header">
                     <h3>
-                        AR Malik 
-                        <img alt="Logo" height="40" class="pull-right" src="<?php echo base_url('images/logo.png'); ?>">
+                        AR Malik
+                        <img alt="Logo" height="40" class="pull-right" src="http://191.96.50.38/login_2018_19/images/logo.png">
                     </h3>
                     <p>Fill out the form below to login.</p>
                 </div>
