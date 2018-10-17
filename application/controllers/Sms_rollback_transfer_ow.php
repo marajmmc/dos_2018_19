@@ -11,7 +11,6 @@ class Sms_rollback_transfer_ow extends Root_Controller
         $this->message="";
         $this->permissions=User_helper::get_permission(get_class($this));
         $this->controller_url=strtolower(get_class($this));
-        $this->load->config('table_sms');
         $this->lang->load('sms');
     }
     public function index($action="list",$id=0)

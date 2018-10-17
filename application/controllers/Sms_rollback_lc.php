@@ -10,8 +10,7 @@ class Sms_rollback_lc extends Root_Controller
         parent::__construct();
         $this->message="";
         $this->permissions=User_helper::get_permission(get_class($this));
-        $this->controller_url=strtolower(get_class($this));
-        $this->load->config('table_sms');
+        $this->controller_url=strtolower(get_class($this));        
         $this->lang->load('sms');
     }
     public function index($action="list",$id=0)
