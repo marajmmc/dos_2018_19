@@ -7,10 +7,18 @@ class User_helper
     function __construct($id)
     {
         $CI = & get_instance();
-        $user = $CI->db->get_where($CI->config->item('table_dos_setup_user_info'), array('user_id' => $id,'revision'=>1))->row();
-        if ($user)
+        $this->username_password_same=false;
+        //user
+        $result=Query_helper::get_info($CI->config->item('table_dos_setup_user'),'*',array('id ='.$id),1);
+        if($result && (md5($result['user_name'])==$result['password']))
         {
-            foreach ($user as $key => $value)
+            $this->username_password_same=true;
+        }
+        //user info
+        $result=Query_helper::get_info($CI->config->item('table_dos_setup_user_info'),'*',array('user_id ='.$id,'revision =1'),1);
+        if ($result)
+        {
+            foreach ($result as $key => $value)
             {
                 $this->$key = $value;
             }

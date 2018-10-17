@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$configs_path=str_replace('fms_2018_19','login_2018_19',APPPATH).'config/';
+$configs_path=str_replace('dos_2018_19','login_2018_19',APPPATH).'config/';
 
 require_once($configs_path.'user_group.php');
 require_once($configs_path.'table_ems.php');
